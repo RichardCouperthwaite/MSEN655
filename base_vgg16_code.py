@@ -13,6 +13,7 @@ from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2
 from keras.optimizers import SGD
 from keras.utils import plot_model
 import numpy as np
+from keras.applications.vgg16 import VGG16
 
 def VGG_16(weights_path=None):
     model = Sequential()
@@ -79,3 +80,4 @@ if __name__ == "__main__":
 #    out = model.predict(im)
 #    print(np.argmax(out))
 #    plot_model(model, to_file='model.jpg')
+    
