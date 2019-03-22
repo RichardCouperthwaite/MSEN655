@@ -18,6 +18,7 @@ from keras.preprocessing.image import load_img, img_to_array
 from keras.applications.vgg19 import preprocess_input
 import numpy as np
 import json
+import time
 
 def load_micrograph(img_path):
     set_image_dim_ordering('tf')
@@ -48,6 +49,7 @@ def get_parameter_levels(cropsData):
     
 
 if __name__ == "__main__":
+    start = time.time()
     # obtain the dictionary of filenames for the cropped images in the UHCS dataset
     with open('Micrograph_data.json', 'r') as f:
         cropsData = json.load(f)
@@ -62,11 +64,12 @@ if __name__ == "__main__":
     #time = [90.0, 0, 180.0, 1440.0, 5100.0, 60.0, 5.0, 480.0, 2880.0]
     
     index = 0
+    count = 0
     
     for label in cropsData:
-        print("\r{}% Completed".format(round(index/len(cropsData)*100, 2)), end='')
-        if label != '_default':
-            if cropsData[label]['Cool Method'] != 'N/A':
+        print("\r{}% Completed | {} images skipped | Current Label: {}        ".format((round(index/len(cropsData)*100, 1)), count, label), end='')
+        if label not in ['_defaultTraceback', '_default', 'No-Treatment']:
+            if label not in cropsData['No-Treatment']:
                 new_img = load_micrograph(cropsData[label]['Path'])
                 if index == 0:
                     inputs = new_img
@@ -81,6 +84,10 @@ if __name__ == "__main__":
                     y_cool.append(cropsData[label]['Cool Method'])
                     y_time.append(cropsData[label]['Anneal Time'])
                     y_temp.append(cropsData[label]['Anneal Temperature'])
-                index += 1
+            else:
+                count += 1
+        index += 1
                 
-    print(y_cool)
+    end = time.time()
+    print("\n Time Taken (min): ", round((end-start)/60,2))
+                
