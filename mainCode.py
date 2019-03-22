@@ -14,11 +14,15 @@ import Test4
 import Test5
 import Test6
 from keras.backend import set_image_dim_ordering
-from keras.preprocessing.image import load_img, img_to_array
-from keras.applications.vgg19 import preprocess_input
+from keras.preprocessing.image import load_img, img_to_array, image
+from keras.applications.vgg19 import preprocess_input, VGG19
+from sklearn.model_selection import train_test_split
+from keras.models import Model
 import numpy as np
+import matplotlib.pyplot as plt
 import json
 import time
+
 
 def load_micrograph(img_path):
     set_image_dim_ordering('tf')
@@ -45,6 +49,15 @@ def get_parameter_levels(cropsData):
             if cropsData[label]['Anneal Temperature'] not in temp:
                 temp.append(cropsData[label]['Anneal Temperature'])
     return micros, cool, temp, time
+
+def split_data(x_data, y_data, size):
+    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=size, random_state=None)
+    return x_train, x_test, y_train, y_test
+
+def test_model(model, x_data, y_data):
+    
+    pass
+
     
     
 
@@ -67,7 +80,7 @@ if __name__ == "__main__":
     count = 0
     
     for label in cropsData:
-        print("\r{}% Completed | {} images skipped | Current Label: {}        ".format((round(index/len(cropsData)*100, 1)), count, label), end='')
+        print("\r{}% Completed | {}/{} images skipped | Current Label: {}        ".format((round(index/len(cropsData)*100, 1)), count, len(cropsData), label), end='')
         if label not in ['_defaultTraceback', '_default', 'No-Treatment']:
             if label not in cropsData['No-Treatment']:
                 new_img = load_micrograph(cropsData[label]['Path'])
@@ -87,7 +100,34 @@ if __name__ == "__main__":
             else:
                 count += 1
         index += 1
-                
+        # stop loop before all samples run to speed up testing
+        if index == 500:
+            break
+        
     end = time.time()
-    print("\n Time Taken (min): ", round((end-start)/60,2))
+    print("\nTime Taken (min): ", round((end-start)/60,2))
+    y_micro = np.array(y_micro)
+    y_cool = np.array(y_cool)
+    y_time = np.array(y_time)
+    y_temp = np.array(y_temp)
+    x_train, x_test, y_train, y_test = split_data(inputs, np.array(y_micro), 0.3)
+
+    print(x_train.shape)
+    print(x_test.shape)
+    print(y_train.shape)
+    print(y_test.shape)
+    
+    base_model = VGG19(weights='imagenet')
+    model = Model(inputs=base_model.input, outputs=base_model.get_layer('block4_pool').output)
+    
+#    block4_pool_features = model.predict(x_test)
+    block4_pool_features = base_model.predict(x_test)
+    
+    print(block4_pool_features.shape)
+    plt.hist(block4_pool_features[1,:])
+    plt.hist(block4_pool_features[10,:])
+    plt.hist(block4_pool_features[20,:])
+    plt.hist(block4_pool_features[30,:])
+    plt.hist(block4_pool_features[40,:])
+    plt.hist(block4_pool_features[50,:])
                 
