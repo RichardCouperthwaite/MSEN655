@@ -18,6 +18,7 @@ from keras.preprocessing.image import load_img, img_to_array, image
 from keras.applications.vgg19 import preprocess_input, VGG19
 from sklearn.model_selection import train_test_split
 from keras.models import Model
+from sklearn.decomposition import PCA
 import numpy as np
 import matplotlib.pyplot as plt
 import json
@@ -130,4 +131,10 @@ if __name__ == "__main__":
     plt.hist(block4_pool_features[30,:])
     plt.hist(block4_pool_features[40,:])
     plt.hist(block4_pool_features[50,:])
+    
+    pca = PCA(n_components=5)
+    pca.fit(block4_pool_features)
+    
+    print(pca.explained_variance_)
+    print(pca.singular_values_)
                 
