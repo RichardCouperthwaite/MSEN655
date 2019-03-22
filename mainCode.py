@@ -64,6 +64,7 @@ if __name__ == "__main__":
     index = 0
     
     for label in cropsData:
+        print("\r{}% Completed".format(round(index/len(cropsData)*100, 2)), end='')
         if label != '_default':
             if cropsData[label]['Cool Method'] != 'N/A':
                 new_img = load_micrograph(cropsData[label]['Path'])
@@ -73,12 +74,13 @@ if __name__ == "__main__":
                     y_cool = [cropsData[label]['Cool Method']]
                     y_time =[cropsData[label]['Anneal Time']]
                     y_temp = [cropsData[label]['Anneal Temperature']]
-                    index += 1
+                    
                 else:
                     inputs = np.r_[inputs, new_img]
                     y_micro.append(cropsData[label]['Primary_Microconstituent'])
                     y_cool.append(cropsData[label]['Cool Method'])
                     y_time.append(cropsData[label]['Anneal Time'])
                     y_temp.append(cropsData[label]['Anneal Temperature'])
+                index += 1
                 
     print(y_cool)
