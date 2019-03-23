@@ -121,7 +121,7 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
     # split the data into train and test sets
     x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
     # Use a stochastic gradient descent optimizer, and train the model
-    sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+    sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss=losses.categorical_crossentropy)
     model.fit(x_train, y_train, epochs=epoch_num, batch_size=batch_num, shuffle=True)
     # obtain the test results
@@ -129,12 +129,7 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
     
     print(test_result)
     print(y_test)
-    pass
-
-
-
-    
-    
+    pass 
 
 if __name__ == "__main__":
     # retrieve the data for the testing
@@ -144,7 +139,7 @@ if __name__ == "__main__":
     print(print_summary(base_model))
     outlayer='dense_3'
     
-    train_and_test_model(base_model, x_data, y_micro, 50)
+    train_and_test_model(base_model, x_data, y_micro, 100)
     
     
     
