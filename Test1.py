@@ -14,43 +14,19 @@ from keras.optimizers import SGD
 from keras.utils import plot_model
 import numpy as np
 
-def structone(weights_path=None):
+def structone():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(128, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(128, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-#
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))
@@ -59,13 +35,10 @@ def structone(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
-
     return model
 
 
-def structtwo(weights_path=None):
+def structtwo():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -91,22 +64,6 @@ def structtwo(weights_path=None):
     model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-#
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
@@ -114,48 +71,26 @@ def structtwo(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
 
     return model
 
-def structthree(weights_path=None):
+def structthree():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(128, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(128, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-#
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))
@@ -164,12 +99,10 @@ def structthree(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
 
     return model
 
-def structfour(weights_path=None):
+def structfour():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -202,14 +135,6 @@ def structfour(weights_path=None):
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-#
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))
@@ -218,55 +143,33 @@ def structfour(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
 
     return model
 
-def structfive(weights_path=None):
+def structfive():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(128, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(128, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(1024, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(1024, (3, 3), activation='relu'))
-#    model.add(ZeroPadding2D((1,1)))
-#    model.add(Convolution2D(1024, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
@@ -276,12 +179,10 @@ def structfive(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
 
     return model
 
-def structsix(weights_path=None):
+def structsix():
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -338,10 +239,238 @@ def structsix(weights_path=None):
     model.add(Dropout(0.5))
     model.add(Dense(1000, activation='softmax'))
 
-    if weights_path:
-        model.load_weights(weights_path)
 
     return model
+
+def structseven():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+    
+    return model
+
+
+def structeight():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None')) 
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
+    return model
+
+def structnine():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
+    return model
+
+def structten():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None')) 
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
+    return model
+
+def structeleven():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(1024, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
+    return model
+
+def structtwelve():
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(1024, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(1024, (3, 3), activation='None'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(1024, (3, 3), activation='None'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='None'))
+    model.add(Dropout(0.5))
+    model.add(Dense(1000, activation='softmax'))
+
+
+    return model
+
 
 if __name__ == "__main__":
     #Run some code
