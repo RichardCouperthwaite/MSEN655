@@ -27,6 +27,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 import time
+import h5py
 
 
 def load_micrograph(img_path):
@@ -93,6 +94,20 @@ def import_data():
     
     return inputs, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp
 
+def import_from_hdf5():
+    start = time.time()
+    f = h5py.File("processed_data.hdf5", "r")
+    x_data = np.array(f["x_data"])
+    y_micro = np.array(f["y_micro"])
+    y_cool = np.array(f["y_cool"])
+    y_time_reg = np.array(f["y_time_reg"])
+    y_time = np.array(f["y_time"])
+    y_temp_reg = np.array(f["y_temp_reg"])
+    y_temp = np.array(f["y_temp"])
+    end = time.time()
+    print("Time Taken: ", end-start)
+    return x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp
+
 def get_parameter_levels(cropsData):
     micros = []
     cool = []
@@ -150,8 +165,10 @@ def record_result(name, class_result, score):
 
 if __name__ == "__main__":
     # retrieve the data for the testing
-    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
-    
+    # data has also been formatted into an hdf5 file for easy importing
+#    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
+    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
+
     base_model = Test6.test_structure(False, y_time.shape[1])
     print(print_summary(base_model))
     
@@ -161,38 +178,3 @@ if __name__ == "__main__":
     print("Accuracy: ", test_result[1])
     print("Regression Score: ", score)
     record_result("test1", test_result, score)
-    
-    
-    
-    
-    
-#    x_train, x_test, y_train, y_test = split_data(inputs, np.array(y_time), 0.3)
-#
-#    print(x_train.shape)
-#    print(x_test.shape)
-#    print(y_train.shape)
-#    print(y_test.shape)
-#    
-#    base_model = Test6.test_structure()
-#    sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-#    base_model.compile(optimizer=sgd, loss=losses.mean_absolute_error)
-#    base_model.fit(x_train, y_train, epochs=10, batch_size=10)
-##    model = Model(inputs=base_model.input, outputs=base_model.get_layer('block4_pool').output)
-#    
-##    block4_pool_features = model.predict(x_test)
-#    block4_pool_features = base_model.predict(x_test)
-#
-#    print(block4_pool_features.shape)
-#    plt.hist(block4_pool_features[1,:])
-#    plt.hist(block4_pool_features[10,:])
-#    plt.hist(block4_pool_features[20,:])
-#    plt.hist(block4_pool_features[30,:])
-#    plt.hist(block4_pool_features[40,:])
-#    plt.hist(block4_pool_features[50,:])
-#    
-#    pca = PCA(n_components=5)
-#    pca.fit(block4_pool_features)
-#    
-#    print(pca.explained_variance_)
-#    print(pca.singular_values_)
-                
