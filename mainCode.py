@@ -21,6 +21,8 @@ from keras.models import Model
 from keras import optimizers, losses
 from keras.utils import to_categorical, print_summary
 from sklearn.decomposition import PCA
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF
 import numpy as np
 import matplotlib.pyplot as plt
 import json
@@ -75,7 +77,7 @@ def import_data():
                 count += 1
         index += 1
 #        # stop loop before all samples run to speed up testing
-#        if index == 500:
+#        if index == 100:
 #            break
         
     end = time.time()
@@ -122,24 +124,43 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
     x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
     # Use a stochastic gradient descent optimizer, and train the model
     sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-    model.compile(optimizer=sgd, loss=losses.categorical_crossentropy)
+    model.compile(optimizer=sgd, loss=losses.categorical_crossentropy, metrics=['categorical_accuracy'])
     model.fit(x_train, y_train, epochs=epoch_num, batch_size=batch_num, shuffle=True)
     # obtain the test results
-    test_result = model.predict(x_test)
+    test_result = model.evaluate(x_test, y_test, batch_size=20)
     
     print(test_result)
-    print(y_test)
-    pass 
+#    print(y_test)
+    return model, test_result
+
+def test_regression(base_model, x_data, y_data):
+    x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
+    model = Model(inputs=base_model.input, outputs=base_model.get_layer('dense_3').output)
+    reg_features = model.predict(x_train)
+    gpr = GaussianProcessRegressor(kernel=RBF(), random_state=0).fit(reg_features, y_train)
+    test_features = model.predict(x_test)
+    return(gpr.score(test_features, y_test))
+    
+def record_result(name, class_result, score):
+    with open('results_TEX_output.txt', 'w') as f:
+        f.write("{} & {} & {} & {} \\\\ \n".format(name, class_result[0], class_result[1], score))
+    with open('results_csv_output.csv', 'w') as f:
+        f.write("{}, {}, {}, {} \n".format(name, class_result[0], class_result[1], score))
+
 
 if __name__ == "__main__":
     # retrieve the data for the testing
     x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
     
-    base_model = Test6.test_structure(True, y_micro.shape[1])
+    base_model = Test6.test_structure(False, y_time.shape[1])
     print(print_summary(base_model))
-    outlayer='dense_3'
     
-    train_and_test_model(base_model, x_data, y_micro, 100)
+    model, test_result = train_and_test_model(base_model, x_data, y_time, 100)
+    score = test_regression(model, x_data, y_time_reg)
+    print("Loss: ", test_result[0])
+    print("Accuracy: ", test_result[1])
+    print("Regression Score: ", score)
+    record_result("test1", test_result, score)
     
     
     

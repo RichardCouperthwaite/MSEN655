@@ -60,7 +60,7 @@ def test_structure(categorical, n):
     if categorical:
         model.add(Dense(n, activation='softmax'))
     else:
-        model.add(Dense(20, activation='None'))
+        model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
     return model
