@@ -154,7 +154,7 @@ def test_regression(name, base_model, x_data, y_data):
     reg_features = model.predict(x_train)
     gpr = GaussianProcessRegressor(kernel=RBF(), random_state=0).fit(reg_features, y_train)
     test_features = model.predict(x_test)
-    f = h5py.File("{}.hdf5".format(name))
+    f = h5py.File("results/{}.hdf5".format(name), 'w')
     f.create_dataset("train_features", data=reg_features)
     f.create_dataset("train_output", data=y_train)
     f.create_dataset("test_features", data=test_features)
@@ -162,9 +162,9 @@ def test_regression(name, base_model, x_data, y_data):
     return(gpr.score(test_features, y_test))
     
 def record_result(name, class_result, score):
-    with open('results_TEX_output.txt', 'w') as f:
+    with open('results/results_TEX_output.txt', 'w') as f:
         f.write("{} & {} & {} & {} \\\\ \n".format(name, class_result[0], class_result[1], score))
-    with open('results_csv_output.csv', 'w') as f:
+    with open('results/results_csv_output.csv', 'w') as f:
         f.write("{}, {}, {}, {} \n".format(name, class_result[0], class_result[1], score))
 
 
