@@ -19,7 +19,7 @@ from keras.optimizers import SGD
 from keras.utils import plot_model
 import numpy as np
 
-def structure_one(categorical, n):
+def test2_model1(categorical, n):
     kern_sz = 3
     str_sz = 1
     
@@ -73,7 +73,7 @@ def structure_one(categorical, n):
 
     return model, 'dense_3'
 
-def structure_two(categorical, n):
+def test2_model2(categorical, n):
     kern_sz = 4
     str_sz = 1
     
@@ -127,7 +127,7 @@ def structure_two(categorical, n):
 
     return model, 'dense_3'
 
-def structure_three(categorical, n):
+def test2_model3(categorical, n):
     kern_sz = 5
     str_sz = 1
     
@@ -181,7 +181,7 @@ def structure_three(categorical, n):
 
     return model, 'dense_3'
 
-def structure_four(categorical, n):
+def test2_model4(categorical, n):
     kern_sz = 3
     str_sz = 2
     
@@ -235,7 +235,7 @@ def structure_four(categorical, n):
 
     return model, 'dense_3'
 
-def structure_five(categorical, n):
+def test2_model5(categorical, n):
     kern_sz = 4
     str_sz = 2
     
@@ -289,7 +289,7 @@ def structure_five(categorical, n):
 
     return model, 'dense_3'
 
-def structure_six(categorical, n):
+def test2_model6(categorical, n):
     kern_sz = 5
     str_sz = 2
     
