@@ -10,9 +10,35 @@ Python File to Construct the Models required for Test 6
 from keras.models import Sequential
 from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
-from keras.optimizers import SGD
-from keras.utils import plot_model
 import numpy as np
+import h5py
+
+def get_data(name):
+    f = h5py.File(name, 'r')
+    x_train = np.array(f["train_features"])
+    y_train = np.array(f["train_output"])
+    x_test = np.array(f["test_features"])
+    y_test = np.array(f["test_output"])
+    
+    return x_train, x_test, y_train, y_test
+
+def test6_method1():
+    filenames = ['test1_model1.hdf5', 'test1_model2.hdf5', 'test1_model3.hdf5',
+                 'test1_model4.hdf5', 'test1_model5.hdf5', 'test1_model6.hdf5',
+                 'test1_model7.hdf5', 'test1_model8.hdf5', 'test1_model9.hdf5',
+                 'test1_model10.hdf5', 'test1_model11.hdf5', 'test1_model12.hdf5',
+                 'test2_model1.hdf5', 'test2_model2.hdf5', 'test2_model3.hdf5',
+                 'test2_model4.hdf5', 'test2_model5.hdf5', 'test2_model6.hdf5',
+                 'test3_model1.hdf5', 'test3_model2.hdf5', 'test4_model1.hdf5',
+                 'test5_model1.hdf5', 'test5_model2.hdf5', 'test5_model3.hdf5']
+
+
+
+
+
+
+
+
 
 def test_structure(categorical, n):
     model = Sequential()
