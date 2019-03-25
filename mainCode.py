@@ -148,12 +148,17 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
 #    print(y_test)
     return model, test_result
 
-def test_regression(base_model, x_data, y_data):
+def test_regression(name, base_model, x_data, y_data):
     x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
     model = Model(inputs=base_model.input, outputs=base_model.get_layer('dense_3').output)
     reg_features = model.predict(x_train)
     gpr = GaussianProcessRegressor(kernel=RBF(), random_state=0).fit(reg_features, y_train)
     test_features = model.predict(x_test)
+    f = h5py.File("{}.hdf5".format(name))
+    f.create_dataset("train_features", data=reg_features)
+    f.create_dataset("train_output", data=y_train)
+    f.create_dataset("test_features", data=test_features)
+    f.create_dataset("test_output", data=y_test)
     return(gpr.score(test_features, y_test))
     
 def record_result(name, class_result, score):
@@ -172,8 +177,8 @@ if __name__ == "__main__":
     base_model = Test6.test_structure(False, y_time.shape[1])
     print(print_summary(base_model))
     
-    model, test_result = train_and_test_model(base_model, x_data, y_time, 100)
-    score = test_regression(model, x_data, y_time_reg)
+    model, test_result = train_and_test_model(base_model, x_data, y_time, 1)
+    score = test_regression("test1", model, x_data, y_time_reg)
     print("Loss: ", test_result[0])
     print("Accuracy: ", test_result[1])
     print("Regression Score: ", score)
