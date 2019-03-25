@@ -12,6 +12,9 @@ from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
 import numpy as np
 import h5py
+from sklearn.linear_model import ridge, Lasso
+from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
 
 def get_data(name):
     f = h5py.File(name, 'r')
@@ -22,7 +25,7 @@ def get_data(name):
     
     return x_train, x_test, y_train, y_test
 
-def test6_method1():
+def test6_regression_test():
     filenames = ['test1_model1.hdf5', 'test1_model2.hdf5', 'test1_model3.hdf5',
                  'test1_model4.hdf5', 'test1_model5.hdf5', 'test1_model6.hdf5',
                  'test1_model7.hdf5', 'test1_model8.hdf5', 'test1_model9.hdf5',
@@ -30,15 +33,28 @@ def test6_method1():
                  'test2_model1.hdf5', 'test2_model2.hdf5', 'test2_model3.hdf5',
                  'test2_model4.hdf5', 'test2_model5.hdf5', 'test2_model6.hdf5',
                  'test3_model1.hdf5', 'test3_model2.hdf5', 'test4_model1.hdf5',
-                 'test5_model1.hdf5', 'test5_model2.hdf5', 'test5_model3.hdf5']
-
-
-
-
-
-
-
-
+                 'test5_model1.hdf5', 'test5_model2.hdf5', 'test5_model3.hdf5',
+                 'test5_model4.hdf5', 'test5_model5.hdf5', 'test5_model6.hdf5']
+    for name in filenames:
+        x_train, x_test, y_train, y_test = get_data(name)
+        ridge_reg = ridge(alpha=1.0)
+        ridge_reg.fit(x_train, y_train)
+        score1 = ridge_reg.score(x_test, y_test)
+        
+        lasso_reg = Lasso(alpha=0.1)
+        lasso_reg.fit(x_train, y_train)
+        score2 = lasso_reg.score(x_test, y_test)
+        
+        svr_reg = SVR(gamma='scale', C=1.0, epsilon=0.2)
+        svr_reg.fit(x_train, y_train)
+        score3 = svr_reg.score(x_test, y_test)
+        
+        rf_reg = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
+        rf_reg.fit(x_train, y_train)
+        score4 = rf_reg.score(x_test, y_test)
+        
+        with open('results/regressiontest.txt', 'a') as f:
+            f.write("{}, {}, {}, {}, {} \n".format(name, score1, score2, score3, score4))
 
 def test_structure(categorical, n):
     model = Sequential()
