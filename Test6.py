@@ -26,15 +26,24 @@ def get_data(name):
     return x_train, x_test, y_train, y_test
 
 def test6_regression_test():
-    filenames = ['test1_model1.hdf5', 'test1_model2.hdf5', 'test1_model3.hdf5',
-                 'test1_model4.hdf5', 'test1_model5.hdf5', 'test1_model6.hdf5',
-                 'test1_model7.hdf5', 'test1_model8.hdf5', 'test1_model9.hdf5',
-                 'test1_model10.hdf5', 'test1_model11.hdf5', 'test1_model12.hdf5',
-                 'test2_model1.hdf5', 'test2_model2.hdf5', 'test2_model3.hdf5',
-                 'test2_model4.hdf5', 'test2_model5.hdf5', 'test2_model6.hdf5',
-                 'test3_model1.hdf5', 'test3_model2.hdf5', 'test4_model1.hdf5',
-                 'test5_model1.hdf5', 'test5_model2.hdf5', 'test5_model3.hdf5',
-                 'test5_model4.hdf5', 'test5_model5.hdf5', 'test5_model6.hdf5']
+    filenames = ['test1_model1_temp.hdf5', 'test1_model2_temp.hdf5', 'test1_model3_temp.hdf5',
+                 'test1_model4_temp.hdf5', 'test1_model5_temp.hdf5', 'test1_model6_temp.hdf5',
+                 'test1_model7_temp.hdf5', 'test1_model8_temp.hdf5', 'test1_model9_temp.hdf5',
+                 'test1_model10_temp.hdf5', 'test1_model11_temp.hdf5', 'test1_model12_temp.hdf5',
+                 'test2_model1_temp.hdf5', 'test2_model2_temp.hdf5', 'test2_model3_temp.hdf5',
+                 'test2_model4_temp.hdf5', 'test2_model5_temp.hdf5', 'test2_model6_temp.hdf5',
+                 'test3_model1_temp.hdf5', 'test3_model2_temp.hdf5', 'test4_model1_temp.hdf5',
+                 'test5_model1_temp.hdf5', 'test5_model2_temp.hdf5', 'test5_model3_temp.hdf5',
+                 'test5_model4_temp.hdf5', 'test5_model5_temp.hdf5', 'test5_model6_temp.hdf5',
+                 'test1_model1_time.hdf5', 'test1_model2_time.hdf5', 'test1_model3_time.hdf5',
+                 'test1_model4_time.hdf5', 'test1_model5_time.hdf5', 'test1_model6_time.hdf5',
+                 'test1_model7_time.hdf5', 'test1_model8_time.hdf5', 'test1_model9_time.hdf5',
+                 'test1_model10_time.hdf5', 'test1_model11_time.hdf5', 'test1_model12_time.hdf5',
+                 'test2_model1_time.hdf5', 'test2_model2_time.hdf5', 'test2_model3_time.hdf5',
+                 'test2_model4_time.hdf5', 'test2_model5_time.hdf5', 'test2_model6_time.hdf5',
+                 'test3_model1_time.hdf5', 'test3_model2_time.hdf5', 'test4_model1_time.hdf5',
+                 'test5_model1_time.hdf5', 'test5_model2_time.hdf5', 'test5_model3_time.hdf5',
+                 'test5_model4_time.hdf5', 'test5_model5_time.hdf5', 'test5_model6_time.hdf5']
     for name in filenames:
         x_train, x_test, y_train, y_test = get_data(name)
         ridge_reg = ridge(alpha=1.0)

@@ -142,12 +142,12 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
     model.fit(x_train, y_train, epochs=epoch_num, batch_size=batch_num, shuffle=True)
     # obtain the test results
     test_result = model.evaluate(x_test, y_test, batch_size=20)
-    print(test_result)
+#    print(test_result)
     return model, test_result
 
 def test_regression(name, base_model, x_data, y_data, layername):
     x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
-    model = Model(inputs=base_model.input, outputs=base_model.get_layer(layername).output)
+    model = Model(inputs=base_model.input, outputs=base_model.get_layer("dense_{}".format(layername)).output)
     reg_features = model.predict(x_train)
     gpr = GaussianProcessRegressor(kernel=RBF(), random_state=0).fit(reg_features, y_train)
     test_features = model.predict(x_test)
@@ -173,23 +173,29 @@ if __name__ == "__main__":
     
     x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
     epochs = 1
+    layername = 3
 
     samplename = "test1_model1"
     name = samplename+"_micro"
-    base_model, layername = test1_model1(False, y_time.shape[1])
+    base_model, lname = test1_model1(False, y_micro.shape[1])
     print(print_summary(base_model))
-    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
-    record_result(name, test_result, '')
+    model, test_result = train_and_test_model(base_model, x_data, y_micro, epochs)
+    record_result(name, test_result, -20)
     name = samplename+"_time"
+    base_model, lname = test1_model1(False, y_time.shape[1])
+    layername += 4
     print(print_summary(base_model))
     model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
     score = test_regression(name, model, x_data, y_time_reg, layername)
     record_result(name, test_result, score)
     name = samplename+"_temp"
+    base_model, lname = test1_model1(False, y_temp.shape[1])
+    layername += 4
     print(print_summary(base_model))
     model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
     score = test_regression(name, model, x_data, y_temp_reg, layername)
     record_result(name, test_result, score)
+    layername += 4
     
 #    samplename = "test1_model2"
 #    name = samplename+"_micro"
