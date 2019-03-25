@@ -39,7 +39,7 @@ def test1_model1(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 
 def test1_model2(categorical, n):
@@ -80,7 +80,7 @@ def test1_model2(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model3(categorical, n):
     model = Sequential()
@@ -112,7 +112,7 @@ def test1_model3(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model4(categorical, n):
     model = Sequential()
@@ -159,7 +159,7 @@ def test1_model4(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def test1_model5(categorical, n):
     model = Sequential()
@@ -199,7 +199,7 @@ def test1_model5(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model6(categorical, n):
     model = Sequential()
@@ -263,7 +263,7 @@ def test1_model6(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model7(categorical, n):
     model = Sequential()
@@ -290,7 +290,7 @@ def test1_model7(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
     
-    return model
+    return model, 'dense_3'
 
 
 def test1_model8(categorical, n):
@@ -332,7 +332,7 @@ def test1_model8(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model9(categorical, n):
     model = Sequential()
@@ -364,7 +364,7 @@ def test1_model9(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model10(categorical, n):
     model = Sequential()
@@ -412,7 +412,7 @@ def test1_model10(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model11(categorical, n):
     model = Sequential()
@@ -452,7 +452,7 @@ def test1_model11(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 def test1_model12(categorical, n):
     model = Sequential()
@@ -516,7 +516,7 @@ def test1_model12(categorical, n):
         model.add(Dense(n, activation='softmax'))
 
 
-    return model
+    return model, 'dense_3'
 
 
 if __name__ == "__main__":
