@@ -65,7 +65,7 @@ def model1(categorical, n):
         model.add(Dense(20, activation=activ))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def model2(categorical, n):
     activ = 'tanh'
@@ -118,7 +118,7 @@ def model2(categorical, n):
         model.add(Dense(20, activation=activ))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def model3(categorical, n):
     activ = 'sigmoid'
@@ -171,7 +171,7 @@ def model3(categorical, n):
         model.add(Dense(20, activation=activ))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 if __name__ == "__main__":
     #run some code

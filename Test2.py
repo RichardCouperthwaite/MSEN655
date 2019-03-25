@@ -71,7 +71,7 @@ def structure_one(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def structure_two(categorical, n):
     kern_sz = 4
@@ -125,7 +125,7 @@ def structure_two(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def structure_three(categorical, n):
     kern_sz = 5
@@ -179,7 +179,7 @@ def structure_three(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def structure_four(categorical, n):
     kern_sz = 3
@@ -233,7 +233,7 @@ def structure_four(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def structure_five(categorical, n):
     kern_sz = 4
@@ -287,7 +287,7 @@ def structure_five(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 def structure_six(categorical, n):
     kern_sz = 5
@@ -341,7 +341,7 @@ def structure_six(categorical, n):
         model.add(Dense(20, activation='relu'))
         model.add(Dense(n, activation='softmax'))
 
-    return model
+    return model, 'dense_3'
 
 
 
