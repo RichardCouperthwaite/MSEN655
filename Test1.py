@@ -14,7 +14,7 @@ from keras.optimizers import SGD
 from keras.utils import plot_model
 import numpy as np
 
-def structone():
+def test1_model1(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -33,76 +33,16 @@ def structone():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
     return model
 
 
-def structtwo():
-    model = Sequential()
-    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
-    model.add(Convolution2D(64, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(64, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(128, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(128, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(128, (3, 3), activation='relu')) 
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(Flatten())
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
-
-
-    return model
-
-def structthree():
-    model = Sequential()
-    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
-    model.add(Convolution2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(128, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(ZeroPadding2D((1,1)))
-    model.add(Convolution2D(512, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2,2), strides=(2,2)))
-
-    model.add(Flatten())
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
-
-
-    return model
-
-def structfour():
+def test1_model2(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -128,6 +68,78 @@ def structfour():
     model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
+
+
+    return model
+
+def test1_model3(categorical, n):
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
+
+
+    return model
+
+def test1_model4(categorical, n):
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
+    model.add(Convolution2D(64, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, (3, 3), activation='relu')) 
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(ZeroPadding2D((1,1)))
@@ -141,12 +153,15 @@ def structfour():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
-
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
     return model
 
-def structfive():
+def test1_model5(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -177,12 +192,16 @@ def structfive():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structsix():
+def test1_model6(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
@@ -237,12 +256,16 @@ def structsix():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structseven():
+def test1_model7(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -261,12 +284,16 @@ def structseven():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
     
     return model
 
 
-def structeight():
+def test1_model8(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -298,12 +325,16 @@ def structeight():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structnine():
+def test1_model9(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -326,12 +357,16 @@ def structnine():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structten():
+def test1_model10(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -370,12 +405,16 @@ def structten():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structeleven():
+def test1_model11(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -406,12 +445,16 @@ def structeleven():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
 
-def structtwelve():
+def test1_model12(categorical, n):
     model = Sequential()
     model.add(ZeroPadding2D((1,1),input_shape=(224,224,3)))
     model.add(Convolution2D(64, (3, 3), activation='None'))
@@ -466,7 +509,11 @@ def structtwelve():
     model.add(Dropout(0.5))
     model.add(Dense(4096, activation='None'))
     model.add(Dropout(0.5))
-    model.add(Dense(1000, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model
