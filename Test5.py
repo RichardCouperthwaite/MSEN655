@@ -62,11 +62,11 @@ def test5_model1(categorical, n):
     model.add(Flatten())
     model.add(Dense(2000, activation='relu'))
     model.add(Dropout(0.5))
-#    if categorical:
-#        model.add(Dense(n, activation='softmax'))
-#    else:
-#        model.add(Dense(20, activation='relu'))
-#        model.add(Dense(n, activation='softmax'))
+    if categorical:
+        model.add(Dense(n, activation='softmax'))
+    else:
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(n, activation='softmax'))
 
 
     return model, 'dense_2'
