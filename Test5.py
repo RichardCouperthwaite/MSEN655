@@ -283,7 +283,7 @@ def test5_model5(categorical, n):
 #    model.add(Dense(1000, activation='softmax'))
 
 
-    return model, 'dense_6'
+    return model, 'dense_5'
 
 def test5_model6(categorical, n):
     model = Sequential()
@@ -340,7 +340,7 @@ def test5_model6(categorical, n):
 #    model.add(Dense(1000, activation='softmax'))
 
 
-    return model, 'dense_6'
+    return model, 'dense_5'
 
 if __name__ == "__main__":
     pass
