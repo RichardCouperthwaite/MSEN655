@@ -27,6 +27,10 @@ def test1_model1(categorical, n):
     model.add(ZeroPadding2D((1,1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
+    
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+    
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))

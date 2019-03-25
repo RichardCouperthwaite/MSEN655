@@ -7,12 +7,11 @@ Created on Thu Mar 21 14:45:21 2019
 Python File to Run all the individual tests
 """
 
-import Test1
-import Test2
-import Test3
-import Test4
-import Test5
-import Test6
+from Test1 import test1_model1, test1_model2, test1_model3, test1_model4, test1_model5, test1_model6, test1_model7, test1_model8, test1_model9, test1_model10, test1_model11, test1_model12
+from Test2 import test2_model1, test2_model2, test2_model3, test2_model4, test2_model5, test2_model6
+from Test3 import test3_model1, test3_model2
+from Test4 import test4_model1
+from Test5 import test5_model1, test5_model2, test5_model3, test5_model4, test5_model5, test5_model6
 from keras.backend import set_image_dim_ordering
 from keras.preprocessing.image import load_img, img_to_array, image
 from keras.applications.vgg19 import preprocess_input, VGG19
@@ -143,9 +142,7 @@ def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
     model.fit(x_train, y_train, epochs=epoch_num, batch_size=batch_num, shuffle=True)
     # obtain the test results
     test_result = model.evaluate(x_test, y_test, batch_size=20)
-    
     print(test_result)
-#    print(y_test)
     return model, test_result
 
 def test_regression(name, base_model, x_data, y_data, layername):
@@ -162,9 +159,9 @@ def test_regression(name, base_model, x_data, y_data, layername):
     return(gpr.score(test_features, y_test))
     
 def record_result(name, class_result, score):
-    with open('results/results_TEX_output.txt', 'w') as f:
-        f.write("{} & {} & {} & {} \\\\ \n".format(name, class_result[0], class_result[1], score))
-    with open('results/results_csv_output.csv', 'w') as f:
+    with open('results/results_TEX_output.txt', 'a') as f:
+        f.write("{} & {} & {} & {} \\\\ \n".format(name, round(class_result[0],2), round(class_result[1],2), round(score,2)))
+    with open('results/results_csv_output.csv', 'a') as f:
         f.write("{}, {}, {}, {} \n".format(name, class_result[0], class_result[1], score))
 
 
@@ -172,14 +169,448 @@ if __name__ == "__main__":
     # retrieve the data for the testing
     # data has also been formatted into an hdf5 file for easy importing
 #    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
-    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
-
-    base_model, layername = Test6.test_structure(False, y_time.shape[1])
-    print(print_summary(base_model))
+    start = time.time()
     
-    model, test_result = train_and_test_model(base_model, x_data, y_time, 1)
-    score = test_regression("test1", model, x_data, y_time_reg, layername)
-    print("Loss: ", test_result[0])
-    print("Accuracy: ", test_result[1])
-    print("Regression Score: ", score)
-    record_result("test1", test_result, score)
+    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
+    epochs = 1
+
+    samplename = "test1_model1"
+    name = samplename+"_micro"
+    base_model, layername = test1_model1(False, y_time.shape[1])
+    print(print_summary(base_model))
+    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+    record_result(name, test_result, '')
+    name = samplename+"_time"
+    print(print_summary(base_model))
+    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+    score = test_regression(name, model, x_data, y_time_reg, layername)
+    record_result(name, test_result, score)
+    name = samplename+"_temp"
+    print(print_summary(base_model))
+    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+    score = test_regression(name, model, x_data, y_temp_reg, layername)
+    record_result(name, test_result, score)
+    
+#    samplename = "test1_model2"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model3"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model4"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model5"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model6"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model7"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model7(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model7(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model7(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model8"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model8(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model8(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model8(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model9"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model9(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model9(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model9(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model10"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model10(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model10(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model10(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model11"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model11(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model11(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model11(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test1_model12"
+#    name = samplename+"_micro"
+#    base_model, layername = test1_model12(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test1_model12(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test1_model12(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model1"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model2"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model3"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model4"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model5"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test2_model6"
+#    name = samplename+"_micro"
+#    base_model, layername = test2_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test2_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test2_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test3_model1"
+#    name = samplename+"_micro"
+#    base_model, layername = test3_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test3_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test3_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test3_model2"
+#    name = samplename+"_micro"
+#    base_model, layername = test3_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test3_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test3_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test4_model1"
+#    name = samplename+"_micro"
+#    base_model, layername = test4_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test4_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test4_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model1"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model1(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model2"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model2(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model3"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model3(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model4"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model4(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model5"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model5(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+#    
+#    samplename = "test5_model6"
+#    name = samplename+"_micro"
+#    base_model, layername = test5_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    record_result(name, test_result, '')
+#    name = samplename+"_time"
+#    base_model, layername = test5_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_time, epochs)
+#    score = test_regression(name, model, x_data, y_time_reg, layername)
+#    record_result(name, test_result, score)
+#    name = samplename+"_temp"
+#    base_model, layername = test5_model6(False, y_time.shape[1])
+#    model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
+#    score = test_regression(name, model, x_data, y_temp_reg, layername)
+#    record_result(name, test_result, score)
+    
+    end = time.time()
+    
+    print("###########################################################################")
+    print("###########################################################################")
+    print("###########################################################################")
+    print("###########################################################################")
+    print("Time Taken: ", (end-start)/60)
