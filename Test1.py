@@ -109,7 +109,7 @@ def test1_model3(categorical, n):
     model.add(MaxPooling2D((2,2), strides=(2,2)))
     
     model.add(MaxPooling2D((2,2), strides=(2,2)))
-
+   
     model.add(Flatten())
     model.add(Dense(4096, activation='relu'))
     model.add(Dropout(0.5))
@@ -158,6 +158,7 @@ def test1_model4(categorical, n):
     model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
     
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
     model.add(MaxPooling2D((2,2), strides=(2,2)))
 
     model.add(Flatten())
