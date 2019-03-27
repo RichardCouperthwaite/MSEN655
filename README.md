@@ -10,7 +10,7 @@ Extract images to directory
 Json file contains index of all images in the directory.
 
 The repository is organised into two sections:
-1) Classification
+1) Classification:
   This section deals with the testing of various parameters used in the CNN for classification or regression
-2) Generation
+2) Generation:
   This section deals with testing of parameters for the generation of microstructural images
