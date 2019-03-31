@@ -45,10 +45,10 @@ def principle_component(filename, data):
 
 def get_data(name):
     f = h5py.File(name, 'r')
-    x_train = np.array(f["train_features"])
-    y_train = np.array(f["train_output"])
-    x_test = np.array(f["test_features"])
-    y_test = np.array(f["test_output"])
+    x_train = np.array(f["train_features"]).astype('float64')
+    y_train = np.array(f["train_output"]).astype('float64').transpose()
+    x_test = np.array(f["test_features"]).astype('float64')
+    y_test = np.array(f["test_output"]).astype('float64').transpose()
     
     return x_train, x_test, y_train, y_test
 
@@ -72,7 +72,10 @@ def test6_regression_test():
                  'test5_model1_time.hdf5', 'test5_model2_time.hdf5', 'test5_model3_time.hdf5',
                  'test5_model4_time.hdf5', 'test5_model5_time.hdf5', 'test5_model6_time.hdf5']
     for name in filenames:
-        x_train, x_test, y_train, y_test = get_data(name)
+        print(name)
+        x_train, x_test, y_train, y_test = get_data("results/"+name)
+        print(x_train.shape)
+        print(y_train.shape)
         
         correlation_matrix_plot(name, x_train)
         principle_component(name, x_train)
@@ -81,9 +84,10 @@ def test6_regression_test():
         lasso_reg.fit(x_train, y_train)
         score2 = lasso_reg.score(x_test, y_test)
         
-        svr_reg = SVR(gamma='scale', C=1.0, epsilon=0.2)
-        svr_reg.fit(x_train, y_train)
-        score3 = svr_reg.score(x_test, y_test)
+        # svr_reg = SVR(gamma='scale', C=1.0, epsilon=0.2)
+        # svr_reg.fit(x_train, y_train)
+        # score3 = svr_reg.score(x_test, y_test)
+        score3 = -20
         
         rf_reg = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
         rf_reg.fit(x_train, y_train)

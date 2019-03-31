@@ -40,14 +40,14 @@ def load_micrograph(img_path):
 
 def import_data():
     start = time.time()
-    obtain the dictionary of filenames for the cropped images in the UHCS dataset
+    # obtain the dictionary of filenames for the cropped images in the UHCS dataset
     with open('Micrograph_data.json', 'r') as f:
         cropsData = json.load(f)
         
-    function can be run to confirm the levels hard coded below
+    # function can be run to confirm the levels hard coded below
     #micros, cool, temp, time = get_parameter_levels(cropsData)
     
-    Hard coded levels for the parameters of interest
+    # Hard coded levels for the parameters of interest
     micros = ['spheroidite', 'pearlite+spheroidite', 'network', 'spheroidite+widmanstatten', 'pearlite', 'pearlite+widmanstatten', 'martensite']
     cool = ['Q', 'N/A', 'AR', '650-1H', 'FC']
     temp = [0, 800.0, 970.0, 1100.0, 900.0, 1000.0, 700.0, 750.0]
@@ -56,7 +56,7 @@ def import_data():
     index = 0
     count = 0
     
-    retrieve the meta-data and images
+    # retrieve the meta-data and images
     for label in cropsData:
         print("\r{}% Completed | {}/{} images skipped | Current Label: {}        ".format((round(index/len(cropsData)*100, 1)), count, len(cropsData), label), end='')
         if label not in ['_defaultTraceback', '_default', 'No-Treatment']:
@@ -83,10 +83,10 @@ def import_data():
         
     end = time.time()
     print("\nTime Taken (min): ", round((end-start)/60,2))
-    convert the outputs to categorical values for use in the training
+    # convert the outputs to categorical values for use in the training
     y_micro = to_categorical(np.array(y_micro))
     y_cool = to_categorical(np.array(y_cool))
-    keep a copy of the time and temperature as actual values for use in regression
+    # keep a copy of the time and temperature as actual values for use in regression
     y_time_reg = np.array(y_time)
     y_time = to_categorical(np.array(y_time))
     y_temp_reg = np.array(y_temp)
@@ -135,13 +135,13 @@ def split_data(x_data, y_data, size=0.1):
     return x_train, x_test, y_train, y_test
 
 def train_and_test_model(model, x_data, y_data, epoch_num=500, batch_num=20):
-    split the data into train and test sets
+    # split the data into train and test sets
     x_train, x_test, y_train, y_test = split_data(x_data, y_data, 0.1)
-    Use a stochastic gradient descent optimizer, and train the model
+    # Use a stochastic gradient descent optimizer, and train the model
     sgd = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss=losses.categorical_crossentropy, metrics=['categorical_accuracy'])
     model.fit(x_train, y_train, epochs=epoch_num, batch_size=batch_num, shuffle=True)
-    obtain the test results
+    # obtain the test results
     test_result = model.evaluate(x_test, y_test, batch_size=20)
 #    print(test_result)
     return model, test_result
@@ -165,14 +165,18 @@ def record_result(name, class_result, score):
     with open('results/results_csv_output.csv', 'a') as f:
         f.write("{}, {}, {}, {} \n".format(name, class_result[0], class_result[1], score))
 
+        
+def model_analysis():
+    """
+    Function Handles the running of the various models. The output from the 20 neuron
+    layer needs to be corrected for the models if selected models are being run
+    """
 
-if __name__ == "__main__":
-#    retrieve the data for the testing
-#    data has also been formatted into an hdf5 file for easy importing
-#    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
-    start = time.time()
+    # retrieve the data for the testing
+    # data has also been formatted into an hdf5 file for easy importing
+    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_data()
     
-    x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
+    # x_data, y_micro, y_cool, y_time_reg, y_time, y_temp_reg, y_temp = import_from_hdf5()
     epochs = 80
 
     samplename = "test1_model1"
@@ -765,16 +769,11 @@ if __name__ == "__main__":
     model, test_result = train_and_test_model(base_model, x_data, y_temp, epochs)
     score = test_regression(name, model, x_data, y_temp_reg, layername)
     record_result(name, test_result, score)
-    
-    
+
+if __name__ == "__main__":
+    # Run the analysis of the models to get the prediction accuracy and the results
+    # from using a GP regression
+    model_analysis()
+    # Run the regression tests to get the correlations, PCA results and the 
+    # Regression with different methods
     test6_regression_test()
-    
-    
-    
-    end = time.time()
-    
-    print("###########################################################################")
-    print("###########################################################################")
-    print("###########################################################################")
-    print("###########################################################################")
-    print("Time Taken: ", (end-start)/60)
