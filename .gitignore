@@ -3,9 +3,4 @@
 *.tif
 data/crops/micrographs.json
 processed_data.hdf5
-results_csv_output.csv
-results_output.txt
-results_TEX_output.txt
-results/test1_model1_time.hdf5
-results/test1_model1_temp.hdf5
 regressionTests.py
