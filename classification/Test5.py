@@ -5,6 +5,8 @@ Created on Thu Mar 21 14:45:21 2019
 @author: Richard Couperthwaite
 
 Python File to Construct the Models required for Test 5
+Contains models to test the effects of the number and size of the
+    fully connected layers.
 """
 
 # -*- coding: utf-8 -*-
