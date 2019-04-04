@@ -5,6 +5,7 @@ Created on Thu Mar 21 14:45:21 2019
 @author: Richard Couperthwaite
 
 Python File to Construct the Models required for Test 4
+Contains model to test the effects of having an average pooling layers.
 """
 
 from keras.models import Sequential
