@@ -165,6 +165,55 @@ def testPCA():
         print("{}, {}, {}, {}, {} \n".format(name, score1, score2, score3, score4))
         with open('results/regressiontest_afterPCA.txt', 'a') as f:
             f.write("{}, {}, {}, {}, {} \n".format(name, score1, score2, score3, score4))
+            
+
+def testCorrelation():
+    filenames = ['test1_model2_temp.hdf5', 'test1_model4_temp.hdf5', 'test2_model1_temp.hdf5', 
+                 'test2_model3_temp.hdf5', 'test4_model1_temp.hdf5', 'test5_model3_temp.hdf5',
+                 'test5_model4_temp.hdf5', 'test1_model2_time.hdf5', 'test1_model4_time.hdf5', 
+                 'test2_model1_time.hdf5', 'test2_model3_time.hdf5', 'test4_model1_time.hdf5',
+                 'test5_model3_time.hdf5', 'test5_model4_time.hdf5']
+    features = [[2,3,4,11,12,13,14,16,17,19], [2,8,9,11], [2,3,4,6,7,8,13,14,16,17,19],
+                [0,4,5,6,7,8,9,11,13,14,15,16], [1,2,3,4,5,6,7,8,9,12,13,15,18,19],
+                [1,2,3,4,6,7,9,10,11,12,13,14,15,16,18,19],[1,2,3,4,6,9,10,11,12,13,14,16,18,19],
+                [2,3,4,11,12,13,14,16,17,19], [2,8,9,11], [2,3,4,6,7,8,13,14,16,17,19],
+                [0,4,5,6,7,8,9,11,13,14,15,16], [1,2,3,4,5,6,7,8,9,12,13,15,18,19],
+                [1,2,3,4,6,7,9,10,11,12,13,14,15,16,18,19],[1,2,3,4,6,9,10,11,12,13,14,16,18,19]]
+    count = 0
+    for name in filenames:
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print(name)
+        x_train, x_test, y_train, y_test = get_data("results/"+name)
+        
+#        correlation_matrix_plot(name, x_train)
+#        new_x_train, new_x_test = principle_component(name, x_train, x_test)
+        
+        gpr = GaussianProcessRegressor(kernel=RBF(), random_state=0).fit(x_train[:,features[count]], y_train)
+        score1 = gpr.score(x_test[:,features[count]], y_test)
+        print('##### GP done #####')
+        
+        lasso_reg = Lasso(alpha=0.1)
+        lasso_reg.fit(x_train[:,features[count]], y_train)
+        score2 = lasso_reg.score(x_test[:,features[count]], y_test)
+        print('##### Lasso done #####')
+        
+        try:
+            svr_reg = SVR(gamma='scale', C=1.0, epsilon=0.2)
+            svr_reg.fit(x_train[:,features[count]], y_train)
+            score3 = svr_reg.score(x_test[:,features[count]], y_test)
+        except:
+            score3 = -20 
+        print('##### SVR done #####')
+        
+        rf_reg = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
+        rf_reg.fit(x_train[:,features[count]], y_train)
+        score4 = rf_reg.score(x_test[:,features[count]], y_test)
+        print('##### RF done #####')
+        print("{}, {}, {}, {}, {} \n".format(name, score1, score2, score3, score4))
+        with open('results/regressiontest_afterCorrExtract2.txt', 'a') as f:
+            f.write("{}, {}, {}, {}, {} \n".format(name, score1, score2, score3, score4))
+        count += 1
 
 if __name__ == "__main__":
-    testPCA()
+#    testPCA()
+    testCorrelation()
