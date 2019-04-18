@@ -5,6 +5,7 @@ Created on Thu Mar 21 14:45:21 2019
 @author: Richard Couperthwaite
 
 Python File to Construct the Models required for Test 3
+Contains models to test the effects of the tanh and sigmoid activation functions.
 """
 
 from keras.models import Sequential

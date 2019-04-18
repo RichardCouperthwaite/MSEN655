@@ -5,6 +5,8 @@ Created on Thu Mar 21 14:45:21 2019
 @author: Richard Couperthwaite
 
 Python File to Construct the Models required for Test 1
+Contains models to test the effects of the number of convolutional layers,
+    the number of blocks, and the existence of ReLU vs. no ReLU.    
 """
 
 from keras.models import Sequential
