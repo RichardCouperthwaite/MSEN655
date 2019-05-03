@@ -239,20 +239,6 @@ with open("lassocv_time_scores.pickle", 'wb') as f:
 
 
 
-
-
-#Plot Lasso and Random Forest Results for Time Predictions
-#lassoCV_time = [lassocv_Time_orig_all_score, lassocv_one_of_4_Time_score, lassocv_two_of_4_Time_score, lassocv_three_of_4_Time_score, lassocv_four_of_4_Time_score]
-#rf_time = [rf_Time_orig_all_score, rf_one_of_4_Time_score, rf_two_of_4_Time_score, rf_three_of_4_Time_score, rf_four_of_4_Time_score]
-#x_axis = np.arange(1,6, step=1)#[1,2,3,4,5]
-#
-#fig, ax = plt.subplots()
-#ax.plot(x_axis, lassoCV_time, label="Lasso CV")
-#ax.plot(x_axis, rf_time, label="Random Forest")
-#ax.legend()
-#
-#plt.show()
-
 #Plot Lasso and Random Forest Results for Temperature Predictions
 lassoCV_temp = [lassocv_Temp_orig_all_score, lassocv_one_of_4_Temp_score, lassocv_two_of_4_Temp_score, lassocv_three_of_4_Temp_score, lassocv_four_of_4_Temp_score]
 rf_temp = [rf_Temp_orig_all_score, rf_one_of_4_Temp_score, rf_two_of_4_Temp_score, rf_three_of_4_Temp_score, rf_four_of_4_Temp_score]
