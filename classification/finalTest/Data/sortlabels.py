@@ -3,33 +3,40 @@
 Created on Wed May  1 10:00:51 2019
 
 @author: richardcouperthwaite
+
+This code is for preparing csv files of separated data for easy importing into
+different methods in the python code for Random Forests and LASSO, or the 
+Matlab code for GP regression testing.
 """
 
 import csv
 import numpy as np
 
+# These two arrays contain the actual temperature and time values that correspond with
+# the indices in the outputs from the Neural Networks
 temps = [0, 800.0, 970.0, 1100.0, 900.0, 1000.0, 700.0, 750.0]
 times = [0, 90.0, 180.0, 1440.0, 5100.0, 60.0, 5.0, 480.0, 2880.0]
 
+# import the labels for the original data
 labels = []
 with open('labels.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for row in readCSV:
         labels.append(row[0].split('-')[0])
-      
+# import the labels for the synthetic data
 synthlabels = []
 with open('synthlabels.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for row in readCSV:
         x = row[0].split('_')[0]
         synthlabels.append(x.split('o')[1])
-        
+# Import the magnifications of the images       
 mags = []
 with open('mags.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for row in readCSV:
         mags.append(float(row[0]))
-
+# Import the time for each of the images
 time = {}
 rowcounter = 0
 with open('y_time_reg.csv') as csvfile:
@@ -37,7 +44,7 @@ with open('y_time_reg.csv') as csvfile:
     for row in readCSV:
         time[labels[rowcounter]] = times[int(float(row[0]))]
         rowcounter += 1
-        
+# Import the Temperature values for each image
 temp = {}
 rowcounter = 0
 with open('y_temp_reg.csv') as csvfile:
@@ -49,7 +56,7 @@ with open('y_temp_reg.csv') as csvfile:
 labelsset = set(labels)
 synthlabelsset = set(synthlabels)       
 
-#Original Data
+# Import the Original image x Data for each of the 5 structures
 x_out_Final_temp_opt = []
 rowcounter = 0
 with open('x_out_Final_temp_opt.csv') as csvfile:
@@ -85,7 +92,7 @@ with open('x_out_Optimization_T5_M4_time.csv') as csvfile:
     for row in readCSV:
         x_out_Optimization_T5_M4_time.append(row)
  
-#Synthetic Data       
+# Import the Synthetic image x Data for each of the 5 structures
 x_out_synth_Final_temp_opt = []
 rowcounter = 0
 with open('x_out_synth_Final_temp_opt.csv') as csvfile:
@@ -140,6 +147,8 @@ sx3 = []
 sx4 = []
 sx5 = []
 
+# add x and actual y data to the lists ready for exporting to csv
+# do this for both original and synthetic data
 for i in range(len(synthlabels)):
     try:
         synthtemps.append(temp[synthlabels[i]])
@@ -161,7 +170,7 @@ for i in range(len(labels)):
         x4.append(x_out_Optimization_T2_M3_temp[i])
         x5.append(x_out_Optimization_T5_M4_time[i])
         
-        
+# Create numpy arrays for each of the x data sets        
 npsynthTemp = np.array(synthtemps)
 npsynthtime = np.array(synthtimes)
 nporigtime = np.array(origtimes)
@@ -176,7 +185,7 @@ sx2= np.array(sx2, dtype=np.float64)
 sx3 = np.array(sx3, dtype=np.float64)
 sx4 = np.array(sx4, dtype=np.float64)
 sx5 = np.array(sx5, dtype=np.float64)
-
+# export the data to csv files
 np.savetxt('Temp_synth_synthMatch.csv', npsynthTemp)
 np.savetxt('Time_synth_synthMatch.csv', npsynthtime)
 np.savetxt('Time_orig_synthMatch.csv', nporigtime)
@@ -191,17 +200,19 @@ np.savetxt('xFTime_synth_synthMatch.csv', sx2)
 np.savetxt('xT1M2_synth_synthMatch.csv', sx3)
 np.savetxt('xT2M3_synth_synthMatch.csv', sx4)
 np.savetxt('xT5M4_synth_synthMatch.csv', sx5)
-
+# create numpy arrays of the y data
 npsynthTemp = np.array(synthtemps)
 npsynthtime = np.array(synthtimes)
 nporigtime = np.array(origtimes)
 nporigtemp = np.array(origtemps)
-
+# export the y data to csv file
 np.savetxt('npsynthTemp.csv', npsynthTemp)
 np.savetxt('npsynthtime.csv', npsynthtime)
 np.savetxt('nporigtime.csv', nporigtime)
 np.savetxt('nporigtemp.csv', nporigtemp)
 
+# since there are 5 duplicates of each image in the synthetic data
+# seperate out each duplicate to create 5 batches of synthetic images
 for i in range(5):
     count = 0
     npsx1 = []
@@ -257,9 +268,10 @@ lowmagx4 = []
 lowmagx5 = []
 lowmagytemp = []
 lowmagytime = []
-    
+
+# Using the magnification values separate out a high and low mag dataset
 for i in range(len(mags)):
-    if mags[i] > 1.5:
+    if mags[i] < 0.05:
         highmagx1.append(x_out_Final_temp_opt[i])
         highmagx2.append(x_out_Final_time_opt[i])
         highmagx3.append(x_out_Optimization_T1_M2_time[i])
@@ -267,7 +279,7 @@ for i in range(len(mags)):
         highmagx5.append(x_out_Optimization_T5_M4_time[i])
         highmagytemp.append(temp[labels[i]])
         highmagytime.append(time[labels[i]])
-    if mags[i] < 0.05:
+    if mags[i] > 1.5:
         lowmagx1.append(x_out_Final_temp_opt[i])
         lowmagx2.append(x_out_Final_time_opt[i])
         lowmagx3.append(x_out_Optimization_T1_M2_time[i])
@@ -275,7 +287,9 @@ for i in range(len(mags)):
         lowmagx5.append(x_out_Optimization_T5_M4_time[i])
         lowmagytemp.append(temp[labels[i]])
         lowmagytime.append(time[labels[i]])
-        
+    
+
+#create numpy arrays of the high and low mag data-sets and export to csv    
 nphighmagx1 = np.array(highmagx1, dtype=np.float64)
 nphighmagx2 = np.array(highmagx2, dtype=np.float64)
 nphighmagx3 = np.array(highmagx3, dtype=np.float64)
