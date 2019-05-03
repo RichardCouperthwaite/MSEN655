@@ -43,7 +43,7 @@ if __name__ == "__main__":
     y_data_test = np.array(f["test_output"])
     
     
-    #Open file to write random forest results to
+    #Open file to write Lasso results to
     with open('lasso_temp_results.csv', 'w') as lasso_temp_results_file:
         lasso_writer = csv.writer(lasso_temp_results_file, delimiter=',')
         
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     x_data_test = np.array(f["test_features"])
     y_data_test = np.array(f["test_output"])
     
-    #Open file to write random forest results to
+    #Open file to write Lasso results to
     with open('lasso_time_results.csv', 'w') as lasso_time_results_file:
         lasso_writer = csv.writer(lasso_time_results_file, delimiter=',')
         
