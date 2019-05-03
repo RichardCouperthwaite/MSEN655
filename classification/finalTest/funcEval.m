@@ -1,4 +1,24 @@
 function [R2] = funcEval(param, x_choice, y_choice)
+% This function does the evaluation of the score for a training and testing
+% of a GP Regression for users choice of high and low mag samples from the
+% testing data. The function requires 3 inputs:
+%
+% param: the L and sf values for the GP
+% x_choice: the choice of the dataset needed for the analysis
+% (1: high mag data from structure 1)
+% (2: high mag data from structure 2)
+% (3: high mag data from structure 3)
+% (4: high mag data from structure 4)
+% (5: high mag data from structure 5)
+% (6: low mag data from structure 1)
+% (7: low mag data from structure 2)
+% (8: low mag data from structure 3)
+% (9: low mag data from structure 4)
+% (10: low mag data from structure 5)
+
+% y_choice: the choice of the outputs needed for the analysis
+% (1: Temperature output data)
+% (2: Time output data)
     switch x_choice
         case 1
             x_input = csvread('Data/highmagx1.csv');

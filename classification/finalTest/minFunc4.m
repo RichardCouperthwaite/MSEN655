@@ -1,4 +1,7 @@
 function [logML] = minFunc4(param)
+% This function evaluates the log marginal likelihood of the GP 
+% for a given set of hyper-parameters for the data and outputs 
+% from the Test2-Model3 structure trained on temperature classes
     x_input = csvread('Data/x_out_Optimization_T2_M3_temp.csv');
     x_norm1 = x_input - min(x_input(:));
     x_input = x_norm1 ./ max(x_norm1(:));

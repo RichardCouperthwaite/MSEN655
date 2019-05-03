@@ -1,4 +1,20 @@
 function [R2] = funcEvalSynth(param, x_choice, y_choice, numSynth)
+% This function does the evaluation of the score for a training and testing
+% of a GP Regression for users choice of number of synthetic data batches to
+% add to which starting set of data. The function requires 4 inputs:
+%
+% param: the L and sf values for the GP
+% x_choice: the choice of the dataset needed for the analysis
+% (1: data from structure 1)
+% (2: data from structure 2)
+% (3: data from structure 3)
+% (4: data from structure 4)
+% (5: data from structure 5)
+% y_choice: the choice of the outputs needed for the analysis
+% (1: Temperature output data)
+% (2: Time output data)
+% numSynth: the number of synthetic image batches to add to the data
+
     switch x_choice
         case 1
             x_input = csvread('Data/xFTemp_orig_synthMatch.csv');

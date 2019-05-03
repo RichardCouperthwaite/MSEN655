@@ -1,4 +1,7 @@
 function [R2] = funcEval5(param)
+% This function evaluates the GP for a given set of hyper-parameters for
+% the data and outputs from the Test5-Model4 structure trained on time
+% classes
     x_input = csvread('Data/x_out_Optimization_T5_M4_time.csv');
     x_norm1 = x_input - min(x_input(:));
     x_input = x_norm1 ./ max(x_norm1(:));
