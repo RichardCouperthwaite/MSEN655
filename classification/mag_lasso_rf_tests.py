@@ -4,7 +4,7 @@ Created on Wed May  1 09:39:53 2019
 
 @author: jaylen_james
 
-Magnification Scores
+Produced magnification scores for both Lasso and Random Forest
 """
 from sklearn.model_selection import train_test_split
 #from lasso_hyp.py import lassoopt
