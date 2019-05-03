@@ -7,3 +7,4 @@ regressionTests.py
 classification/results/PCA_results_notupload.txt
 *.png
 *.hdf5
+*.zip
