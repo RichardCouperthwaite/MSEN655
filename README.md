@@ -7,11 +7,14 @@ The code in this repository relies on randomly selected training and testing dat
 
 External Link to data used in the test procedures:
 https://drive.google.com/open?id=1YuCaaR5BvnOU0189LqJOMmbHWsbk00Bl
+External Link for the HDF5 files with the processed image data:
+https://drive.google.com/open?id=19BlgjZ2EXhNZ__cUDBWVCLX5fi6edPBy
 
-Extract images to directory
-./data/crops/
+Extract images from first zip file to directory (Json file contains index of all images in the directory.)
+./classification/data/crops/
 
-Json file contains index of all images in the directory.
+Extract the HDF5 files in the second zip file to the classification directory
+
 
 The repository is organised into two sections:
 1) Classification: This section deals with the testing of various parameters used in the CNN for classification or regression
